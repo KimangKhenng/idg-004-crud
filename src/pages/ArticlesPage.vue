@@ -10,7 +10,7 @@
             <button @click="createArticle" class="px-4 py-2 bg-green-600 text-white rounded">Create</button>
         </div>
 
-        <button @click="fetchArticles" class="mb-4 px-4 py-2 bg-green-600 text-white rounded">Load Articles</button>
+        <!-- <button @click="fetchArticles" class="mb-4 px-4 py-2 bg-green-600 text-white rounded">Load Articles</button> -->
         <div v-if="loading" class="text-gray-600">Loading...</div>
 
         <!-- Articles List -->
@@ -46,6 +46,9 @@
 const API = "https://68648e915b5d8d03397d8138.mockapi.io/api/v1";
 import axios from 'axios';
 export default {
+    async mounted() {
+        await this.fetchArticles();
+    },
     data() {
         return {
             loading: false,
@@ -59,6 +62,7 @@ export default {
         async fetchArticles() {
             this.loading = true;
             const res = await axios.get(`${API}/articles`);
+            console.log(res.data);
             this.articles = res.data;
             this.loading = false;
         },

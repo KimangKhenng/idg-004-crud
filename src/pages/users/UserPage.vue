@@ -15,18 +15,19 @@
             <button @click="createUser" class="mt-3 px-4 py-2 bg-blue-600 text-white rounded">Create</button>
         </div>
 
-        <button @click="fetchUsers" class="mb-4 px-4 py-2 bg-blue-600 text-white rounded">Load Users</button>
+        <!-- <button @click="fetchUsers" class="mb-4 px-4 py-2 bg-blue-600 text-white rounded">Load Users</button> -->
         <div v-if="loading" class="text-gray-600">Loading...</div>
 
         <!-- Users List -->
         <div class="grid gap-4">
-            <div v-for="u in users" :key="u.id" class="p-4 bg-white shadow rounded">
+            <router-link v-for="u in users" :key="u.id" class="p-4 bg-white shadow rounded hover:bg-gray-200"
+                :to="`/users/${u.id}`">
                 <p><strong>{{ u.name }}</strong> ({{ u.email }})</p>
                 <p>Age: {{ u.age }} | Major: {{ u.major }} | Salary: ${{ u.salary }}</p>
 
                 <button @click="editUser(u)" class="mt-2 px-3 py-1 bg-yellow-500 text-white rounded">Edit</button>
                 <button @click="deleteUser(u.id)" class="mt-2 px-3 py-1 bg-red-600 text-white rounded">Delete</button>
-            </div>
+            </router-link>
         </div>
 
         <!-- Update User Modal -->
@@ -53,6 +54,9 @@
 const API = "https://68648e915b5d8d03397d8138.mockapi.io/api/v1";
 import axios from 'axios';
 export default {
+    async mounted() {
+        await this.fetchUsers();
+    },
     data() {
         return {
             loading: false,
