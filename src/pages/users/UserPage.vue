@@ -20,14 +20,18 @@
 
         <!-- Users List -->
         <div class="grid gap-4">
-            <router-link v-for="u in users" :key="u.id" class="p-4 bg-white shadow rounded hover:bg-gray-200"
-                :to="`/users/${u.id}`">
+            <div v-for="u in users" :key="u.id" class="p-4 bg-white shadow rounded hover:bg-gray-200">
                 <p><strong>{{ u.name }}</strong> ({{ u.email }})</p>
                 <p>Age: {{ u.age }} | Major: {{ u.major }} | Salary: ${{ u.salary }}</p>
-
-                <button @click="editUser(u)" class="mt-2 px-3 py-1 bg-yellow-500 text-white rounded">Edit</button>
-                <button @click="deleteUser(u.id)" class="mt-2 px-3 py-1 bg-red-600 text-white rounded">Delete</button>
-            </router-link>
+                <div class="flex space-x-4">
+                    <button @click="navigateToUser(u.id)"
+                        class="mt-2 px-3 py-1 bg-green-500 text-white rounded hover:cursor-pointer">View</button>
+                    <button @click="editUser(u)"
+                        class="mt-2 px-3 py-1 bg-yellow-500 text-white rounded hover:cursor-pointer">Edit</button>
+                    <button @click="deleteUser(u.id)"
+                        class="mt-2 px-3 py-1 bg-red-600 text-white rounded hover:cursor-pointer">Delete</button>
+                </div>
+            </div>
         </div>
 
         <!-- Update User Modal -->
@@ -67,6 +71,9 @@ export default {
         }
     },
     methods: {
+        navigateToUser(id) {
+            this.$router.push(`/users/${id}`)
+        },
         async fetchUsers() {
             this.loading = true;
             const res = await axios.get(`${API}/users`);
