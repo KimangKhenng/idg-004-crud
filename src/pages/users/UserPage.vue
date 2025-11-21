@@ -35,7 +35,7 @@
         </div>
 
         <!-- Update User Modal -->
-        <div v-if="editingUser" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+        <div v-if="editingUser" class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center">
             <div class="bg-white p-6 rounded shadow max-w-md w-full">
                 <h2 class="font-bold mb-3">Update User</h2>
 
@@ -56,30 +56,28 @@
 </template>
 <script>
 const API = "https://68648e915b5d8d03397d8138.mockapi.io/api/v1";
+import { useUsersStore } from '@/stores/usersStore';
 import axios from 'axios';
+import { mapActions, mapState } from 'pinia';
 export default {
     async mounted() {
         await this.fetchUsers();
     },
     data() {
         return {
-            loading: false,
-            users: [],
             formUser: { name: '', email: '', age: '', major: '', salary: '' },
             editingUser: null,
             editForm: {},
         }
     },
+    computed: {
+        ...mapState(useUsersStore, { users: 'getUsers', loading: 'getLoading' })
+    },
     methods: {
         navigateToUser(id) {
             this.$router.push(`/users/${id}`)
         },
-        async fetchUsers() {
-            this.loading = true;
-            const res = await axios.get(`${API}/users`);
-            this.users = res.data;
-            this.loading = false;
-        },
+        ...mapActions(useUsersStore, ['fetchUsers']),
         async createUser() {
             await axios.post(`${API}/users`, this.formUser);
             this.formUser = { name: '', email: '', age: '', major: '', salary: '' };

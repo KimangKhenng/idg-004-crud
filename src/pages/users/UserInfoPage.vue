@@ -16,28 +16,30 @@
     </div>
     <div v-else>
         <p>Hello User: {{ $route.params.userId }}</p>
-        <p>Age: {{ user.age }}</p>
-        <p>Salary: {{ user.salary }}</p>
-        <p>Name: {{ user.name }}</p>
+        <p>Age: {{ getUserById($route.params.userId).age }}</p>
+        <p>Salary: {{ getUserById($route.params.userId).salary }}</p>
+        <p>Name: {{ getUserById($route.params.userId).name }}</p>
     </div>
 </template>
 <script>
+import { useUsersStore } from '@/stores/usersStore';
 import axios from 'axios';
+import { mapState } from 'pinia';
 const API = "https://68648e915b5d8d03397d8138.mockapi.io/api/v1";
 export default {
     async mounted() {
         const userId = this.$route.params.userId
-        this.loading = true
-        const response = await axios.get(`${API}/users/${userId}`)
-        this.user = response.data
-        this.loading = false
-        console.log(this.user)
+        // console.log(this.getUserById(userId))
+        // this.user = this.getUserById(userId)
     },
     data() {
         return {
             user: {},
             loading: false
         }
+    },
+    computed: {
+        ...mapState(useUsersStore, { getUserById: 'getUserById', loading: 'getLoading' })
     }
 }
 </script>
