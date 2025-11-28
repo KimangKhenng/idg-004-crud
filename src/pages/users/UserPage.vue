@@ -19,7 +19,7 @@
         <div v-if="loading" class="text-gray-600">Loading...</div>
 
         <!-- Users List -->
-        <div class="grid gap-4">
+        <div v-else class="grid gap-4">
             <!-- <div v-for="u in users" :key="u.id" class="p-4 bg-white shadow rounded hover:bg-gray-200">
                 <p><strong>{{ u.name }}</strong> ({{ u.email }})</p>
                 <p>Age: {{ u.age }} | Major: {{ u.major }} | Salary: ${{ u.salary }}</p>
@@ -66,20 +66,31 @@
 </template>
 <script setup>
 const API = "https://68648e915b5d8d03397d8138.mockapi.io/api/v1";
+
 import { useUsersStore } from '@/stores/usersStore';
+import { storeToRefs } from 'pinia';
+const userStore = useUsersStore()
+
+
 import UserCard from '@/components/UserCard.vue';
 import axios from 'axios';
+
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router'
 const router = useRouter()
-const { fetchUsers, getLoading: loading, getUsers: users } = useUsersStore()
+
+const { fetchUsers } = userStore
+const { getLoading: loading, getUsers: users } = storeToRefs(userStore)
+
 const formUser = ref({ name: '', email: '', age: '', major: '', salary: '' })
 const editingUser = ref(null)
 const editForm = ref({})
 
 onMounted(async () => {
     console.log("Hello World")
+    console.log(loading)
     await fetchUsers();
+    console.log(loading)
 })
 const navigateToUser = (id) => {
     router.push(`/users/${id}`)
