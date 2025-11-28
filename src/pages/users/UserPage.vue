@@ -54,7 +54,43 @@
 
     </div>
 </template>
-<script>
+<script setup>
+const API = "https://68648e915b5d8d03397d8138.mockapi.io/api/v1";
+import { useUsersStore } from '@/stores/usersStore';
+import axios from 'axios';
+import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router'
+const router = useRouter()
+const { fetchUsers, getLoading: loading, getUsers: users } = useUsersStore()
+const formUser = ref({ name: '', email: '', age: '', major: '', salary: '' })
+const editingUser = ref(null)
+const editForm = ref({})
+onMounted(async () => {
+    await fetchUsers();
+})
+const navigateToUser = (id) => {
+    router.push(`/users/${id}`)
+}
+const createUser = async () => {
+    await axios.post(`${API}/users`, formUser.value);
+    formUser.value = { name: '', email: '', age: '', major: '', salary: '' };
+    await fetchUsers();
+}
+const editUser = (u) => {
+    editingUser.value = u.id;
+    editForm.value = { ...u };
+}
+const updateUser = async () => {
+    await axios.put(`${API}/users/${editingUser.value}`, editForm.value);
+    editingUser.value = null;
+    await fetchUsers();
+}
+const deleteUser = async (id) => {
+    await axios.delete(`${API}/users/${id}`);
+    await fetchUsers();
+}
+</script>
+<!-- <script>
 const API = "https://68648e915b5d8d03397d8138.mockapi.io/api/v1";
 import { useUsersStore } from '@/stores/usersStore';
 import axios from 'axios';
@@ -98,4 +134,4 @@ export default {
         },
     }
 }
-</script>
+</script> -->

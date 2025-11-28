@@ -21,25 +21,38 @@
         <p>Name: {{ getUserById($route.params.userId).name }}</p>
     </div>
 </template>
-<script>
+<script setup>
+
 import { useUsersStore } from '@/stores/usersStore';
-import axios from 'axios';
-import { mapState } from 'pinia';
-const API = "https://68648e915b5d8d03397d8138.mockapi.io/api/v1";
-export default {
-    async mounted() {
-        const userId = this.$route.params.userId
-        // console.log(this.getUserById(userId))
-        // this.user = this.getUserById(userId)
-    },
-    data() {
-        return {
-            user: {},
-            loading: false
-        }
-    },
-    computed: {
-        ...mapState(useUsersStore, { getUserById: 'getUserById', loading: 'getLoading' })
-    }
-}
+import { onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+
+const route = useRoute()
+
+const { getUserById, getLoading: loading } = useUsersStore()
+
+
+onMounted(() => {
+    const userId = route.params.userId
+    console.log(getUserById(userId))
+})
+// import { useUsersStore } from '@/stores/usersStore';
+// import { mapState } from 'pinia';
+
+// export default {
+//     async mounted() {
+//         const userId = this.$route.params.userId
+//         // console.log(this.getUserById(userId))
+//         // this.user = this.getUserById(userId)
+//     },
+//     data() {
+//         return {
+//             user: {},
+//             loading: false
+//         }
+//     },
+//     // computed: {
+//     //     ...mapState(useUsersStore, { getUserById: 'getUserById', loading: 'getLoading' })
+//     // }
+// }
 </script>
