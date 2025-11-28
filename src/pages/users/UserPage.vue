@@ -20,7 +20,7 @@
 
         <!-- Users List -->
         <div class="grid gap-4">
-            <div v-for="u in users" :key="u.id" class="p-4 bg-white shadow rounded hover:bg-gray-200">
+            <!-- <div v-for="u in users" :key="u.id" class="p-4 bg-white shadow rounded hover:bg-gray-200">
                 <p><strong>{{ u.name }}</strong> ({{ u.email }})</p>
                 <p>Age: {{ u.age }} | Major: {{ u.major }} | Salary: ${{ u.salary }}</p>
                 <div class="flex space-x-4">
@@ -31,7 +31,17 @@
                     <button @click="deleteUser(u.id)"
                         class="mt-2 px-3 py-1 bg-red-600 text-white rounded hover:cursor-pointer">Delete</button>
                 </div>
-            </div>
+            </div> -->
+            <UserCard v-for="u in users" :key="u.id" :user="u">
+                <div class="flex space-x-4">
+                    <button @click="navigateToUser(u.id)"
+                        class="mt-2 px-3 py-1 bg-green-500 text-white rounded hover:cursor-pointer">View</button>
+                    <button @click="editUser(u)"
+                        class="mt-2 px-3 py-1 bg-yellow-500 text-white rounded hover:cursor-pointer">Edit</button>
+                    <button @click="deleteUser(u.id)"
+                        class="mt-2 px-3 py-1 bg-red-600 text-white rounded hover:cursor-pointer">Delete</button>
+                </div>
+            </UserCard>
         </div>
 
         <!-- Update User Modal -->
@@ -57,6 +67,7 @@
 <script setup>
 const API = "https://68648e915b5d8d03397d8138.mockapi.io/api/v1";
 import { useUsersStore } from '@/stores/usersStore';
+import UserCard from '@/components/UserCard.vue';
 import axios from 'axios';
 import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router'
@@ -65,7 +76,9 @@ const { fetchUsers, getLoading: loading, getUsers: users } = useUsersStore()
 const formUser = ref({ name: '', email: '', age: '', major: '', salary: '' })
 const editingUser = ref(null)
 const editForm = ref({})
+
 onMounted(async () => {
+    console.log("Hello World")
     await fetchUsers();
 })
 const navigateToUser = (id) => {
