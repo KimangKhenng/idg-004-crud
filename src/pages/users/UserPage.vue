@@ -1,10 +1,10 @@
 <template>
     <div>
-        <h1 class="text-2xl font-bold mb-4">Users CRUD</h1>
+        <h1 class="text-2xl font-bold mb-4">គ្រប់គ្រងអ្នកប្រើ</h1>
 
         <!-- Create User Form -->
         <div class="bg-white p-4 rounded shadow mb-6">
-            <h2 class="font-semibold mb-2">Create User</h2>
+            <h2 class="font-semibold mb-2">បង្កើតអ្នកប្រើ</h2>
             <div class="grid grid-cols-2 gap-4">
                 <input v-model="formUser.name" placeholder="Name" class="p-2 border rounded" />
                 <input v-model="formUser.email" placeholder="Email" class="p-2 border rounded" />
