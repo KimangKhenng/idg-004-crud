@@ -4,6 +4,7 @@ import UserPage from '@/pages/users/UserPage.vue'
 import UserInfoPage from '@/pages/users/UserInfoPage.vue'
 import ArticlesPage from '@/pages/ArticlesPage.vue'
 import ContantMe from '@/pages/contact-me.vue'
+import ThankYou from '@/pages/ThankYou.vue'
 
 const routes = [
     { path: '/', redirect: '/users' },
@@ -11,6 +12,7 @@ const routes = [
     { path: '/users/:userId', component: UserInfoPage },
     { path: '/articles', component: ArticlesPage },
     { path: '/contact-me', component: ContantMe },
+    { path: '/thank-you', component: ThankYou }
 ]
 
 const router = createRouter({
