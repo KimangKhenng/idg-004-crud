@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia'
 import axios from 'axios'
 
-const API = "https://68648e915b5d8d03397d8138.mockapi.io/api/v1";
+// const API = "https://68648e915b5d8d03397d8138.mockapi.io/api/v1";
+const API = import.meta.env.VITE_BASE_URL;
 
 export const useUsersStore = defineStore('users', {
     state: () => ({ users: [], loading: false }),
@@ -15,6 +16,7 @@ export const useUsersStore = defineStore('users', {
     actions: {
         async fetchUsers() {
             this.loading = true;
+            console.log(API)
             const res = await axios.get(`${API}/users`);
             this.users = res.data;
             this.loading = false;

@@ -20,18 +20,6 @@
 
         <!-- Users List -->
         <div v-else class="grid gap-4">
-            <!-- <div v-for="u in users" :key="u.id" class="p-4 bg-white shadow rounded hover:bg-gray-200">
-                <p><strong>{{ u.name }}</strong> ({{ u.email }})</p>
-                <p>Age: {{ u.age }} | Major: {{ u.major }} | Salary: ${{ u.salary }}</p>
-                <div class="flex space-x-4">
-                    <button @click="navigateToUser(u.id)"
-                        class="mt-2 px-3 py-1 bg-green-500 text-white rounded hover:cursor-pointer">View</button>
-                    <button @click="editUser(u)"
-                        class="mt-2 px-3 py-1 bg-yellow-500 text-white rounded hover:cursor-pointer">Edit</button>
-                    <button @click="deleteUser(u.id)"
-                        class="mt-2 px-3 py-1 bg-red-600 text-white rounded hover:cursor-pointer">Delete</button>
-                </div>
-            </div> -->
             <UserCard v-for="u in users" :key="u.id" :user="u">
                 <div class="flex space-x-4">
                     <button @click="navigateToUser(u.id)"
@@ -87,10 +75,7 @@ const editingUser = ref(null)
 const editForm = ref({})
 
 onMounted(async () => {
-    console.log("Hello World")
-    console.log(loading)
     await fetchUsers();
-    console.log(loading)
 })
 const navigateToUser = (id) => {
     router.push(`/users/${id}`)
