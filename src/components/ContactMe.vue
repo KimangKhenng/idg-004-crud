@@ -1,6 +1,6 @@
 <template>
     <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
-        <form name="contact" method="POST" netlify netlify-honeypot="bot-field" @submit.prevent="handleSubmit"
+        <form name="contact" action="https://formspree.io/f/mzzngodl" method="POST"
             class="w-full max-w-lg bg-white rounded-2xl shadow-2xl p-8 space-y-6">
             <!-- Required hidden inputs for Netlify -->
             <input type="hidden" name="form-name" value="contact" />
@@ -49,16 +49,4 @@ const form = reactive({
     message: "",
 });
 
-async function handleSubmit() {
-    const data = new FormData();
-    data.append("form-name", "contact");
-    Object.keys(form).forEach((key) => data.append(key, form[key]));
-
-    await fetch("/", {
-        method: "POST",
-        body: data,
-    });
-
-    alert("Submitted!");
-}
 </script>
