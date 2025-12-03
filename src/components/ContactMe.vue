@@ -1,6 +1,7 @@
 <template>
     <div class="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
-        <form name="contact" netlify class="w-full max-w-lg bg-white rounded-2xl shadow-2xl p-8 space-y-6">
+        <form name="contact" netlify class="w-full max-w-lg bg-white rounded-2xl shadow-2xl p-8 space-y-6"
+            method="POST">
             <div class="text-center mb-8">
                 <h2 class="text-3xl font-bold text-gray-800 mb-2">Get In Touch</h2>
                 <p class="text-gray-600">We'd love to hear from you</p>
